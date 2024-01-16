@@ -8,12 +8,14 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Mindmap;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
 use BeastBytes\Mermaid\StyleClassTrait;
 use BeastBytes\Mermaid\TextTrait;
 
 final class Node
 {
+    use CommentTrait;
     use RenderItemsTrait;
     use StyleClassTrait;
     use TextTrait;
@@ -24,13 +26,8 @@ final class Node
     public function __construct(
         private readonly string $id,
         private readonly ?NodeShape $shape = null,
-        private string $text = '',
-        private readonly bool $isMarkdown = false
     )
     {
-        if ($this->text === '') {
-            $this->text = $this->id;
-        }
     }
 
     public function addNode(Node ...$node): self
@@ -52,15 +49,18 @@ final class Node
     {
         $output = [];
 
+        if ($this->text === '') {
+            $this->text = $this->id;
+        }
+
+        $this->renderComment($indentation, $output);
         $output[] = $indentation
             . $this->id
             . $this->getStyleClass()
             . ($this->shape === null ? '' : str_replace('%s', $this->getText(), $this->shape->value))
         ;
 
-        if (count($this->nodes) > 0) {
-            $output[] = $this->renderItems($this->nodes, $indentation);
-        }
+        $this->renderItems($this->nodes, $indentation, $output);
 
         return implode("\n", $output);
     }

@@ -8,12 +8,15 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Mindmap;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use Stringable;
 
 final class Mindmap implements MermaidInterface, Stringable
 {
+    use CommentTrait;
+
     private const TYPE = 'mindmap';
 
     public function __construct(private readonly Node $root)
@@ -29,6 +32,7 @@ final class Mindmap implements MermaidInterface, Stringable
     {
         $output = [];
 
+        $this->renderComment('', $output);
         $output[] = self::TYPE;
         $output[] = $this
             ->root

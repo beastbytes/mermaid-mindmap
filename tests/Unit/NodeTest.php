@@ -3,12 +3,24 @@
 use BeastBytes\Mermaid\Mindmap\Node;
 use BeastBytes\Mermaid\Mindmap\NodeShape;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+
 test('Node test', function () {
     expect(
         (new Node('NodeId'))
             ->render('')
     )
         ->toBe('NodeId')
+    ;
+});
+
+test('Node with comment', function () {
+    expect(
+        (new Node('NodeId'))
+            ->withComment(COMMENT)
+            ->render('')
+    )
+        ->toBe('%% ' . COMMENT . "\nNodeId")
     ;
 });
 

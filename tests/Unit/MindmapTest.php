@@ -4,10 +4,13 @@ use BeastBytes\Mermaid\Mindmap\Mindmap;
 use BeastBytes\Mermaid\Mindmap\Node;
 use BeastBytes\Mermaid\Mindmap\NodeShape;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+
 test('Mindmap test', function () {
     expect(
         (new Mindmap(
-            (new Node('root', NodeShape::Circle, 'mindmap'))
+            (new Node('root', NodeShape::Circle))
+                ->withText('mindmap')
                 ->withNode(
                     (new Node('Origins'))
                         ->withNode(
@@ -15,6 +18,7 @@ test('Mindmap test', function () {
                             (new Node('Popularisation'))
                                 ->withNode(new Node('British popular psychology author Tony Buzan'))
                         )
+                    ->withComment(COMMENT)
                     ,
                     (new Node('Research'))
                         ->withNode(
@@ -40,11 +44,14 @@ test('Mindmap test', function () {
                     ,
                 )
         ))
-        ->render()
+            ->withComment(COMMENT)
+            ->render()
     )
         ->toBe("<pre class=\"mermaid\">\n"
+            . '%% ' . COMMENT . "\n"
             . "mindmap\n"
             . "  root((&quot;mindmap&quot;))\n"
+            . '    %% ' . COMMENT . "\n"
             . "    Origins\n"
             . "      Long history\n"
             . "      Popularisation\n"
