@@ -28,7 +28,7 @@ final class Mindmap implements MermaidInterface, Stringable
         return $this->render();
     }
 
-    public function render(): string
+    public function render(array $attributes = []): string
     {
         $output = [];
 
@@ -39,6 +39,6 @@ final class Mindmap implements MermaidInterface, Stringable
             ->render(Mermaid::INDENTATION)
         ;
 
-        return Mermaid::render($output);
+        return Mermaid::render($output, $attributes);
     }
 }
