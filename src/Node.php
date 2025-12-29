@@ -1,14 +1,12 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Mindmap;
 
 use BeastBytes\Mermaid\CommentTrait;
+use BeastBytes\Mermaid\IconTrait;
+use BeastBytes\Mermaid\IdTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
 use BeastBytes\Mermaid\StyleClassTrait;
 use BeastBytes\Mermaid\TextTrait;
@@ -16,6 +14,8 @@ use BeastBytes\Mermaid\TextTrait;
 final class Node
 {
     use CommentTrait;
+    use IconTrait;
+    use IdTrait;
     use RenderItemsTrait;
     use StyleClassTrait;
     use TextTrait;
@@ -24,10 +24,11 @@ final class Node
     private array $nodes = [];
 
     public function __construct(
-        private readonly string $id,
+        ?string $id = null,
         private readonly ?NodeShape $shape = null,
     )
     {
+        $this->id = $id;
     }
 
     public function addNode(Node ...$node): self
@@ -49,19 +50,23 @@ final class Node
     {
         $output = [];
 
-        if ($this->text === '') {
+        if ($this->text === null) {
             $this->text = $this->id;
         }
 
-        $this->renderComment($indentation, $output);
+        $output[] = $this->renderComment($indentation);
         $output[] = $indentation
-            . $this->id
+            . $this->getId()
             . $this->getStyleClass()
-            . ($this->shape === null ? '' : str_replace('%s', $this->getText(), $this->shape->value))
+            . $this->renderIcon()
+            . ($this->shape instanceof NodeShape
+                ? str_replace('%s', $this->getText(true), $this->shape->value)
+                : ''
+            )
         ;
 
-        $this->renderItems($this->nodes, $indentation, $output);
+        $output[] = $this->renderItems($this->nodes, $indentation);
 
-        return implode("\n", $output);
+        return implode("\n", array_filter($output, fn($v) => !empty($v)));
     }
 }

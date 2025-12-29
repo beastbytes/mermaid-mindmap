@@ -1,44 +1,39 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Mindmap;
 
 use BeastBytes\Mermaid\CommentTrait;
+use BeastBytes\Mermaid\Diagram;
 use BeastBytes\Mermaid\Mermaid;
-use BeastBytes\Mermaid\MermaidInterface;
-use Stringable;
 
-final class Mindmap implements MermaidInterface, Stringable
+final class Mindmap extends Diagram
 {
     use CommentTrait;
 
-    private const TYPE = 'mindmap';
+    private Node $root;
 
-    public function __construct(private readonly Node $root)
+    private const string TYPE = 'mindmap';
+
+    public function withRoot(Node $root): self
     {
+        $new = clone $this;
+        $new->root = $root;
+        return $new;
     }
 
-    public function __toString(): string
-    {
-        return $this->render();
-    }
-
-    public function render(array $attributes = []): string
+    protected function renderDiagram(): string
     {
         $output = [];
 
-        $this->renderComment('', $output);
+        $output[] = $this->renderComment('');
         $output[] = self::TYPE;
         $output[] = $this
             ->root
             ->render(Mermaid::INDENTATION)
         ;
 
-        return Mermaid::render($output, $attributes);
+        return implode("\n", array_filter($output, fn($v) => !empty($v)));
     }
 }

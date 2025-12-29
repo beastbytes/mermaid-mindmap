@@ -3,7 +3,8 @@
 use BeastBytes\Mermaid\Mindmap\Node;
 use BeastBytes\Mermaid\Mindmap\NodeShape;
 
-defined('COMMENT') or define('COMMENT', 'comment');
+defined('COMMENT') or define('COMMENT', 'Comment');
+defined('ICON') or define('ICON', 'fa fa-book');
 
 test('Node test', function () {
     expect(
@@ -20,7 +21,11 @@ test('Node with comment', function () {
             ->withComment(COMMENT)
             ->render('')
     )
-        ->toBe('%% ' . COMMENT . "\nNodeId")
+        ->toBe(<<<EXPECTED
+%% Comment
+NodeId
+EXPECTED
+        )
     ;
 });
 
@@ -32,12 +37,27 @@ test('Node with shape test', function (string $id, NodeShape $shape, string $res
         ->toBe($result)
     ;
 })
-    ->with([
-        ['Bang', NodeShape::Bang, 'Bang))"Bang"(('],
-        ['Circle', NodeShape::Circle, 'Circle(("Circle"))'],
-        ['Cloud', NodeShape::Cloud, 'Cloud)"Cloud"('],
-        ['Hexagon', NodeShape::Hexagon, 'Hexagon{{"Hexagon"}}'],
-        ['Rectangle', NodeShape::Rectangle, 'Rectangle["Rectangle"]'],
-        ['Rounded', NodeShape::Rounded, 'Rounded("Rounded")'],
-    ])
+    ->with('shapes')
 ;
+
+test('Node with icon', function () {
+    expect(
+        (new Node('NodeId'))
+            ->withIcon(ICON)
+            ->render('')
+    )
+        ->toBe(<<<EXPECTED
+NodeId::icon(fa fa-book)
+EXPECTED
+        )
+    ;
+});
+
+dataset('shapes', [
+    ['Bang', NodeShape::bang, 'Bang))"Bang"(('],
+    ['Circle', NodeShape::circle, 'Circle(("Circle"))'],
+    ['Cloud', NodeShape::cloud, 'Cloud)"Cloud"('],
+    ['Hexagon', NodeShape::hexagon, 'Hexagon{{"Hexagon"}}'],
+    ['Rectangle', NodeShape::rectangle, 'Rectangle["Rectangle"]'],
+    ['Rounded', NodeShape::rounded, 'Rounded("Rounded")'],
+]);
