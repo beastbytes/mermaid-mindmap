@@ -5,7 +5,7 @@ Mermaid Mindmap API documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: API Contents:
+   :caption: API Contents
 
    mindmap
    node
