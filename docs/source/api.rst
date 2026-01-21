@@ -9,4 +9,4 @@ Mermaid Mindmap API documentation
 
    mindmap
    node
-   node-shape
+   enums

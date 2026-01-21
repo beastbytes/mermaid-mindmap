@@ -1,5 +1,5 @@
-NodeShape Enum
-==============
+Enums
+=====
 
 .. php:enum:: NodeShape : string
 
