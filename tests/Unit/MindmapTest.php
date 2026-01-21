@@ -51,14 +51,14 @@ test('Mindmap test', function () {
 <pre class="mermaid">
 %% Comment
 mindmap
-  root((&quot;mindmap&quot;))
+  root(("mindmap"))
     %% Comment
     Origins
       Long history
       Popularisation
         British popular psychology author Tony Buzan
     Research
-      On effectiveness&lt;br/&gt;and features
+      On effectiveness<br/>and features
       On Automatic creation
         Uses
           Creative techniques
