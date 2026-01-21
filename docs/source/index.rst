@@ -4,11 +4,11 @@
 Mermaid Mindmap
 ===============
 
-Mermaid Mindmap allows creation of `Mermaid Mindmaps <https://mermaid.js.org/syntax/mindmap.html>`__ in PHP.
+Mermaid Mindmap allows creation of `Mermaid JS Mindmaps <https://mermaid.js.org/syntax/mindmap.html>`__ in PHP.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    installation
    usage
@@ -16,4 +16,9 @@ Mermaid Mindmap allows creation of `Mermaid Mindmaps <https://mermaid.js.org/syn
 
 .. seealso::
 
-  `Mermaid documentation <https://beastbytes.github.io/mermaid>`__
+    `Mermaid documentation <https://beastbytes.github.io/mermaid>`__
+
+    `Mermaid JS <https://mermaid.js.org>`__
+
+    `Mermaid JS Mindmaps <https://mermaid.js.org/syntax/mindmap.html>`__
+    
