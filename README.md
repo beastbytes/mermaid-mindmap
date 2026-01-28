@@ -3,4 +3,4 @@ PHP for [Mermaid.js](https://mermaid.js.org/) [mindmap diagram](https://mermaid.
 
 For license information see the [LICENSE](LICENSE.md) file.
 
-Documentation is at [https://beastbytes.github.io/mermaid-mindmap]()
+Documentation is at https://beastbytes.github.io/mermaid-mindmap
